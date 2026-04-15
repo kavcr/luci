@@ -59,18 +59,16 @@ return L.view.extend({
 
 	normalizeUser(entry) {
 		return {
-			id: entry.id,
-			user: entry?.username || entry?.user,
-			group: entry?.group,
-			vpn_ip: entry['vpn-ipv4'] || entry.vpn_ip,
-			vpn_ip6: entry['vpn-ipv6'] || entry.vpn_ip6,
-			ip: entry?.ip,
-			device: entry?.device,
-			time: entry?.time || entry['connected-at'],
-			cipher: entry?.cipher,
-			status: entry?.status,
-			tx: entry?._TX || entry?.TX || entry?.tx,
-			rx: entry?._RX || entry?.RX || entry?.rx
+			id: entry.ID,
+			user: entry.Username,
+			group: entry.Groupname,
+			vpn_ip: entry.IPv4,
+			vpn_ip6: entry.IPv6,
+			ip: entry['Remote IP'],
+			device: entry.Device,
+			time: entry['_Connected at'],
+			cipher: entry['DTLS cipher'],
+			status: entry.State
 		};
 	},
 
@@ -144,8 +142,6 @@ return L.view.extend({
 					E('div', { 'class': 'th' }, _('Time')),
 					E('div', { 'class': 'th' }, _('Cipher')),
 					E('div', { 'class': 'th' }, _('Status')),
-					E('div', { 'class': 'th' }, _('Tx')),
-					E('div', { 'class': 'th' }, _('Rx')),
 					E('div', { 'class': 'th cbi-section-actions' }, _('Actions'))
 				])
 			]);
@@ -153,7 +149,7 @@ return L.view.extend({
 			if (users.length === 0) {
 				table.appendChild(
 					E('div', { 'class': 'tr placeholder' }, [
-						E('div', { 'class': 'td', 'colspan': 13 },
+						E('div', { 'class': 'td', 'colspan': 11 },
 							E('em', _('Collecting data...')))
 					])
 				);
@@ -171,8 +167,6 @@ return L.view.extend({
 							E('div', { 'class': 'td', 'data-title': _('Time') }, user.time),
 							E('div', { 'class': 'td', 'data-title': _('Cipher') }, user.cipher),
 							E('div', { 'class': 'td', 'data-title': _('Status') }, user.status),
-							E('div', { 'class': 'td', 'data-title': _('Tx') }, user.tx),
-							E('div', { 'class': 'td', 'data-title': _('Rx') }, user.rx),
 							E('div', { 'class': 'td cbi-section-actions' }, 
 								E('button', {
 									'class': 'cbi-button cbi-button-remove',
